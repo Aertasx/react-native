@@ -6,47 +6,64 @@ import {
 } from "react-native";
 import StartGameScreen from "./screens/StartGameScreen";
 import { LinearGradient } from "expo-linear-gradient";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GameScreen from "./screens/GameScreen";
 import Colors from "./constants/colors";
 import GameOverScreen from "./screens/GameOverScreen";
 import { useFonts } from "expo-font";
-import AppLoading from "expo-app-loading";
-
+import * as SplashScreen from "expo-splash-screen";
+ 
 export default function App() {
   const [userNumber, setUserNumber] = useState(null);
   const [gameIsOver, setGameIsOver] = useState(true);
-
-  const [fontsLoaded] = useFonts({
+  const [guessRounds, setGuessRounds] = useState(0);
+ 
+  const [fontIsLoaded] = useFonts({
     "open-sans": require("./assets/fonts/OpenSans-Regular.ttf"),
     "open-sans-bold": require("./assets/fonts/OpenSans-Bold.ttf"),
   });
-
-  if (!fontsLoaded) {
-    return <AppLoading />;
+ 
+  useEffect(() => {
+    async function prepare() {
+      if (fontIsLoaded) {
+        await SplashScreen.hideAsync();
+      }
+    }
+    prepare();
+  }, [fontIsLoaded]);
+ 
+  if (!fontIsLoaded) {
+    return null;
   }
-
+ 
+ 
   function pickedNumberHandler(pickedNumber) {
     setUserNumber(pickedNumber);
     setGameIsOver(false);
   }
-
-  function gameOverHandler() {
+ 
+  function gameOverHandler(numberOfRounds) {
     setGameIsOver(true);
+    setGuessRounds(numberOfRounds);
+  }
+ 
+  function startNewGameHandler () {
+      setUserNumber(null);
+      setGuessRounds(0);
   }
 
   let screen = <StartGameScreen onPickNumber={pickedNumberHandler} />;
-
+ 
   if (userNumber) {
     screen = (
       <GameScreen userNumber={userNumber} onGameOver={gameOverHandler} />
     );
   }
-
+ 
   if (gameIsOver && userNumber) {
-    screen = <GameOverScreen />;
+    screen = <GameOverScreen userNumber={userNumber} roundsNumber={guessRounds} onStartNewGame={startNewGameHandler} />;
   }
-
+ 
   return (
     <LinearGradient
       colors={[Colors.primary700, Colors.accent500]}
@@ -63,7 +80,7 @@ export default function App() {
     </LinearGradient>
   );
 }
-
+ 
 const styles = StyleSheet.create({
   rootScreen: {
     flex: 1,
