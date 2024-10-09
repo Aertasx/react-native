@@ -6,7 +6,7 @@ import {
   ScrollView,
   useWindowDimensions,
 } from "react-native";
-import Title from "../components/ui/Title";
+import Title from "../components/ui/Title.ios";
 import Colors from "../constants/colors";
 import PrimaryButton from "../components/ui/PrimaryButton";
 
