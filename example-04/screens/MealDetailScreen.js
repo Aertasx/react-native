@@ -6,15 +6,15 @@ import List from "../components/MealDetail/List";
 import { useContext, useLayoutEffect } from "react";
 import IconButton from "../components/IconButton";
 import { FavoritesContext } from "../store/context/favorites-context";
- 
+
 function MealDetailScreen({ route, navigation }) {
   const favoriteMealsCtx = useContext(FavoritesContext);
- 
+
   const mealId = route.params.mealId;
   const selectedMeal = MEALS.find((meal) => meal.id === mealId);
- 
+
   const mealIsFavorite = favoriteMealsCtx.ids.includes(mealId);
- 
+
   function changeFavoriteStatusHandler() {
     if (mealIsFavorite) {
       favoriteMealsCtx.removeFavorite(mealId);
@@ -22,7 +22,7 @@ function MealDetailScreen({ route, navigation }) {
       favoriteMealsCtx.addFavorite(mealId);
     }
   }
- 
+
   useLayoutEffect(() => {
     navigation.setOptions({
       title: "Meal Detail",
@@ -37,7 +37,7 @@ function MealDetailScreen({ route, navigation }) {
       },
     });
   }, [navigation, changeFavoriteStatusHandler]);
- 
+
   return (
     <ScrollView style={styles.rootContainer}>
       <Image source={{ uri: selectedMeal.imageUrl }} style={styles.image} />
@@ -59,9 +59,9 @@ function MealDetailScreen({ route, navigation }) {
     </ScrollView>
   );
 }
- 
+
 export default MealDetailScreen;
- 
+
 const styles = StyleSheet.create({
   rootContainer: {
     marginBottom: 32,

@@ -1,10 +1,11 @@
 {
   "expo": {
-    "name": "example-04",
-    "slug": "example-04",
+    "name": "section6_app1",
+    "slug": "section6_app1",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "backgroundColor": "#24180f",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
