@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "section8_app1",
-    "slug": "section8_app1",
+    "name": "example-05",
+    "slug": "example-05",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
