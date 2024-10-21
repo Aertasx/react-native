@@ -6,27 +6,27 @@ import LocationPicker from "./LocationPicker";
 import Button from "../UI/Button";
 import { Place } from "../../models/places";
 
-function PlaceForm({ onCreatePlace }) {
-  const [enteredTitle, setEnteredTitle] = useState();
-  const [pickedLocation, setPickedLocation] = useState();
+function PlaceForm({onCreatePlace}) {
+  const [enteredTitle, setEnteredTitle] = useState("");
   const [selectedImage, setSelectedImage] = useState();
+  const [pickedLocation, setPickedLocation] = useState();
 
   function changeTitleHandler(enteredText) {
     setEnteredTitle(enteredText);
-  }
-
-  function savePlaceHandler() {
-    const placeData = new Place(enteredTitle, selectedImage, pickedLocation);
-    onCreatePlace(placeData);
   }
 
   function takeImageHandler(imageUri) {
     setSelectedImage(imageUri);
   }
 
-  const pickLocationHandler = useCallback((location) => {
+  const pickedLocationHandler = useCallback((location) => {
     setPickedLocation(location);
-  });
+  }, []);
+
+  function savePlaceHandler() {
+    const placeData = new Place(enteredTitle, selectedImage, pickedLocation);
+    onCreatePlace(placeData);
+  }
 
   return (
     <ScrollView style={styles.form}>
@@ -39,8 +39,8 @@ function PlaceForm({ onCreatePlace }) {
         />
       </View>
       <ImagePicker onTakeImage={takeImageHandler} />
-      <LocationPicker onPickLocation={pickLocationHandler} />
-      <Button onPress={savePlaceHandler}>Add Place</Button>
+      <LocationPicker onPickedLocation={pickedLocationHandler} />
+      <Button onClick={savePlaceHandler}>Add Place</Button>
     </ScrollView>
   );
 }

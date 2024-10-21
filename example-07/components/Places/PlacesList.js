@@ -5,11 +5,13 @@ import { useNavigation } from "@react-navigation/native";
 
 function PlacesList({ places }) {
   const navigation = useNavigation();
+
   function selectPlaceHandler(id) {
-    navigation.navigate('PlaceDetails', {
-      placeId : id
-    })
+    navigation.navigate("PlaceDetails", {
+      placeId: id,
+    });
   }
+
   if (!places || places.length === 0) {
     return (
       <View style={styles.fallbackContainer}>
@@ -20,10 +22,12 @@ function PlacesList({ places }) {
 
   return (
     <FlatList
-    style={styles.list}
+      style={styles.list}
       data={places}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <PlaceItem place={item} onSelect={selectPlaceHandler} />}
+      renderItem={({ item }) => (
+        <PlaceItem place={item} onSelect={selectPlaceHandler.bind(this, item.id)} />
+      )}
     />
   );
 }
@@ -31,8 +35,8 @@ function PlacesList({ places }) {
 export default PlacesList;
 
 const styles = StyleSheet.create({
-  list:{
-    margin: 16,
+  list: {
+    margin: 24,
   },
   fallbackContainer: {
     flex: 1,
@@ -41,6 +45,6 @@ const styles = StyleSheet.create({
   },
   fallbackText: {
     fontSize: 16,
-    color: Colors.primary200
+    color: Colors.primary200,
   },
 });

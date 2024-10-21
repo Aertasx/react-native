@@ -6,16 +6,18 @@ import { fetchPlaces } from "../util/database";
 function AllPlaces({ route }) {
   const [loadedPlaces, setLoadedPlaces] = useState([]);
   const isFocused = useIsFocused();
+
   useEffect(() => {
     async function loadPlaces() {
       const places = await fetchPlaces();
       setLoadedPlaces(places);
     }
     if (isFocused) {
-      loadPlaces();
       // setLoadedPlaces((curPlaces) => [...curPlaces, route.params.place]);
+      loadPlaces();
     }
-  }, [isFocused, route]);
+  }, [isFocused]);
+
   return <PlacesList places={loadedPlaces} />;
 }
 

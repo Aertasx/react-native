@@ -12,13 +12,16 @@ function Map({ navigation, route }) {
   const [selectedLocation, setSelectedLocation] = useState(initialLocation);
 
   const region = {
-    latitude: initialLocation ? initialLocation.lat : 37.78,
-    longitude: initialLocation ? initialLocation.lng : -122.43,
+    latitude: initialLocation ? initialLocation.lat : 38.422939358065314,
+    longitude: initialLocation ? initialLocation.lng : 27.146996515874452,
     latitudeDelta: 0.0922,
     longitudeDelta: 0.0421,
   };
 
   function selectLocationHandler(event) {
+    if (initialLocation) {
+      return;
+    }
     const lat = event.nativeEvent.coordinate.latitude;
     const lng = event.nativeEvent.coordinate.longitude;
     setSelectedLocation({ lat, lng });
@@ -42,6 +45,7 @@ function Map({ navigation, route }) {
     if (initialLocation) {
       return;
     }
+
     navigation.setOptions({
       headerRight: ({ tintColor }) => (
         <IconButton

@@ -1,3 +1,4 @@
+import * as SplashScreen from "expo-splash-screen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { StatusBar } from "expo-status-bar";
@@ -6,34 +7,36 @@ import AddPlace from "./screens/AddPlace";
 import IconButton from "./components/UI/IconButton";
 import { Colors } from "./constants/colors";
 import Map from "./screens/Map";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { init } from "./util/database";
+import { useState } from "react";
+import PlaceDetails from "./screens/PlaceDetails";
+import { Alert } from "react-native";
 
 const Stack = createNativeStackNavigator();
-import * as SplashScreen from "expo-splash-screen";
-import PlaceDetails from "./screens/PlaceDetails";
-
 SplashScreen.preventAutoHideAsync();
 
 export default function App() {
-  const [dbInitialized, setDbInitilaized] = useState(false);
+  const [dbinit, setDbInit] = useState(false);
+
   useEffect(() => {
     init()
       .then(() => {
-        setDbInitilaized(true);
+        setDbInit(true);
       })
       .catch((err) => {
-        console.log(err);
+        Alert.alert("DB connection error","Can not open the database");
+        setDbInit(true);
       });
   }, []);
 
   useEffect(() => {
-    if (dbInitialized) {
+    if (dbinit) {
       SplashScreen.hideAsync();
     }
-  }, [dbInitialized]);
+  }, [dbinit]);
 
-  if (!dbInitialized) {
+  if (!dbinit) {
     return null;
   }
 
@@ -81,7 +84,7 @@ export default function App() {
             name="PlaceDetails"
             component={PlaceDetails}
             options={{
-              title: "Loading place...",
+              title: "Loading Place...",
             }}
           />
         </Stack.Navigator>

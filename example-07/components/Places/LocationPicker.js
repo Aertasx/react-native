@@ -7,24 +7,22 @@ import {
   useForegroundPermissions,
 } from "expo-location";
 import { useEffect, useState } from "react";
-import { getAddress, getMapPreview } from "../../util/location";
+import { getAddres, getMapPreview } from "../../util/location";
 import {
   useIsFocused,
   useNavigation,
   useRoute,
 } from "@react-navigation/native";
 
-function LocationPicker({ onPickLocation }) {
+function LocationPicker({ onPickedLocation }) {
   const [pickedLocation, setPickedLocation] = useState();
   const isFocused = useIsFocused();
+
   const [locationPermissionInformation, requestPermission] =
     useForegroundPermissions();
+
   const navigation = useNavigation();
   const route = useRoute();
-  const mapPickedLocation = route.params && {
-    lat: route.params.pickedLat,
-    lng: route.params.pickedLng,
-  };
 
   useEffect(() => {
     if (isFocused && route.params) {
@@ -39,15 +37,12 @@ function LocationPicker({ onPickLocation }) {
   useEffect(() => {
     async function handleLocation() {
       if (pickedLocation) {
-        const address = await getAddress(
-          pickedLocation.lat,
-          pickedLocation.lng
-        );
-        onPickLocation({ ...pickedLocation, address: address });
+        const address = await getAddres(pickedLocation.lat, pickedLocation.lng);
+        onPickedLocation({ ...pickedLocation, address });
       }
     }
     handleLocation();
-  }, [pickedLocation, onPickLocation]);
+  }, [pickedLocation, onPickedLocation]);
 
   async function verifyPermissions() {
     if (
@@ -84,7 +79,13 @@ function LocationPicker({ onPickLocation }) {
     // console.log(JSON.stringify(location,null, 2));
   }
 
-  function pickOnMapHandler() {
+  async function pickOnMapHandler() {
+    const hasPermission = await verifyPermissions();
+
+    if (!hasPermission) {
+      return;
+    }
+    
     navigation.navigate("Map");
   }
 
@@ -100,7 +101,6 @@ function LocationPicker({ onPickLocation }) {
       />
     );
   }
-
   return (
     <View>
       <View style={styles.mapPreview}>{locationPreview}</View>
