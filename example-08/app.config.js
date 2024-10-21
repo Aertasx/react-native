@@ -1,6 +1,6 @@
-import { EXPO_PROJECT_ID } from "react-native-dotenv";
+// import { EXPO_PROJECT_ID } from "react-native-dotenv";
 
-const projectId = EXPO_PROJECT_ID ? EXPO_PROJECT_ID : process.env.EXPO_PROJECT_ID;
+// const projectId = EXPO_PROJECT_ID ? EXPO_PROJECT_ID : process.env.EXPO_PROJECT_ID;
 
 export default {
   expo: {
@@ -39,7 +39,7 @@ export default {
     ],
     extra: {
       eas: {
-        projectId: projectId
+        projectId: '702cfe23-4e00-415f-bd02-bdeedef6035e'
       }
     }
   }
