@@ -6,7 +6,7 @@ export default {
   expo: {
     name: "Favorite Places",
     slug: "favorite-places",
-    version: "1.1.2",
+    version: "1.1.3",
     orientation: "portrait",
     icon: "./assets/icon.png",
     userInterfaceStyle: "light",
