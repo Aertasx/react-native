@@ -6,7 +6,7 @@ export default {
   expo: {
     name: "example-08",
     slug: "example-08",
-    version: "1.0.0",
+    version: "1.0.1",
     orientation: "portrait",
     icon: "./assets/icon.png",
     userInterfaceStyle: "light",
@@ -32,7 +32,7 @@ export default {
       [
         "expo-notifications",
         {
-          icon: "./local/assets/notification-icon.png",
+          icon: "./assets/icon.png",
           color: "#ffffff"
         }
       ]
